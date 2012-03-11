@@ -11,12 +11,10 @@ class MoviesController < ApplicationController
     ratings = params[:ratings] ? params[:ratings] : session[:ratings]
     order = params[:order] ? params[:order] : session[:order]
     
-    if ratings
+    if (not params[:ratings] and ratings) or (not params[:order] and order)
       session[:ratings] = ratings
-    end
-    
-    if order
       session[:order] = order
+      redirect_to movies_path(:order => order,:ratings => ratings)
     end
     
     @all_ratings = Movie.list_ratings
