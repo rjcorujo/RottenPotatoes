@@ -11,9 +11,11 @@ class MoviesController < ApplicationController
     order = params[:order]
     
     if (not params[:ratings] and not params[:order])
-      ratings = session[:ratings]
-      order = session[:order]
-      redirect_to movies_path(:order => order,:ratings => ratings)
+      if (session[:ratings] or session[:order])
+        ratings = session[:ratings]
+        order = session[:order]
+        redirect_to movies_path(:order => order,:ratings => ratings)
+      end
     end
     
     session[:ratings] = ratings
