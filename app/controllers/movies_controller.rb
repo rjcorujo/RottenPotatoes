@@ -8,11 +8,12 @@ class MoviesController < ApplicationController
 
   def index
     @all_ratings = Movie.list_ratings
-    @rating_values = Hash[*@all_ratings.map { |r| [r, false]}.flatten]
+    #@rating_values = Hash[*@all_ratings.map { |r| [r, "0"]}.flatten]
+    @rating_values = {}
     filters = {}
     if params[:ratings]
       params[:ratings].keys.each { |x|
-        @rating_values[x] = true
+        @rating_values[x] = "1"
       }
       filters[:rating] = params[:ratings].keys
     end 
