@@ -8,9 +8,9 @@
     = check_box_tag "ratings_#{rating}", "#{@rating_values[rating] ? 1 : 0 }", @rating_values[rating] == "1", :name => "ratings[#{rating}]"
 
   - if @title_order
-    = hidden_field_tag "title_order", "#{@title_order}"
+    = hidden_field_tag "order", "title"
   - if @date_order
-    = hidden_field_tag "release_date_order", "#{@date_order}"
+    = hidden_field_tag "order", "release_date"
   = submit_tag 'Refresh', :id => "ratings_submit"
 
   %table#movies
