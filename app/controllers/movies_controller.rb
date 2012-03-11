@@ -7,26 +7,39 @@ class MoviesController < ApplicationController
   end
 
   def index
+    
+    ratings = session[:ratings] ? session[:ratings] : params[:ratings]
+    order = session[:order] ? session[:order] : params[:order]
+    
+    if ratings
+      session[:ratings] = ratings
+    end
+    
+    if order
+      session[:order] = order
+    end
+    
     @all_ratings = Movie.list_ratings
-    #@rating_values = Hash[*@all_ratings.map { |r| [r, "0"]}.flatten]
     @rating_values = {}
     filters = {}
-    if params[:ratings]
-      params[:ratings].keys.each { |x|
+    if ratings
+      ratings.keys.each { |x|
         @rating_values[x] = "1"
       }
-      filters[:rating] = params[:ratings].keys
+      filters[:rating] = ratings.keys
     end 
     
     ordered_fields = []
     
-    if params[:title_order]
-      ordered_fields = ['title']
-      @title_order = true
-    elsif params[:release_date_order]
-      ordered_fields = ['release_date']
-      @date_order = true
+    if (order == 'title' or order == 'release_date') 
+      ordered_fields = [order]
+      if order == 'title'
+        @title_order = true
+      else
+        @release_date_order = true
+      end
     end
+    
     @movies = Movie.find(:all,:order => ordered_fields, :conditions => filters)
   end
 
