@@ -8,8 +8,8 @@ class MoviesController < ApplicationController
 
   def index
     
-    ratings = session[:ratings] ? session[:ratings] : params[:ratings]
-    order = session[:order] ? session[:order] : params[:order]
+    ratings = params[:ratings] ? params[:ratings] : session[:ratings]
+    order = params[:order] ? params[:order] : session[:order]
     
     if ratings
       session[:ratings] = ratings
