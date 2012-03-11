@@ -7,15 +7,18 @@ class MoviesController < ApplicationController
   end
 
   def index
+    ratings = params[:ratings]
+    order = params[:order]
     
-    ratings = params[:ratings] ? params[:ratings] : session[:ratings]
-    order = params[:order] ? params[:order] : session[:order]
+    if (not params[:ratings] and not params[:order])
+      ratings = session[:ratings]
+      order = session[:order]
+      redirect_to movies_path(:order => order,:ratings => ratings)
+    end
+    
     session[:ratings] = ratings
     session[:order] = order
     
-    if (not params[:ratings] and not params[:order])
-      redirect_to movies_path(:order => order,:ratings => ratings)
-    end
     
     @all_ratings = Movie.list_ratings
     @rating_values = {}
