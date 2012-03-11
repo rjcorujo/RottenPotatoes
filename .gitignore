@@ -9,3 +9,4 @@ tmp/
 # bundler state
 /.bundle
 /vendor/bundle/
+.project
