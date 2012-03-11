@@ -9,6 +9,8 @@
 
   - if @title_order
     = hidden_field_tag "title_order", "#{@title_order}"
+  - if @date_order
+    = hidden_field_tag "release_date_order", "#{@date_order}"
   = submit_tag 'Refresh'
 
   %table#movies
